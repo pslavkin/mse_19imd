@@ -14,10 +14,13 @@
 #include<fcntl.h>
 #include<string.h>
 #include<unistd.h>
+#include<time.h>
 
 #define DEVICE_NAME "/dev/mpu9250_pslavkin"    ///< The device will appear at /dev/ebbchar using this value
 #define BUFFER_LENGTH 256               ///< The buffer length (crude but fine)
 static char receive[BUFFER_LENGTH];     ///< The receive buffer from the LKM
+
+struct timespec delay={0,100000000};
 
 int main(){
    int ret, fd;
@@ -41,12 +44,14 @@ int main(){
 //   getchar();
 //
    printf("Reading from the device...\n");
+while(1) {
    ret = read(fd, receive, BUFFER_LENGTH);        // Read the response from the LKM
    if (ret < 0){
       perror("Failed to read the message from the device.");
       return errno;
    }
-   printf("The received message is: [%s]\n", receive);
-   printf("End of the program\n");
+   printf("%s\n",receive);
+   nanosleep(&delay,NULL);
+}
  return 0;
 }

@@ -55,4 +55,4 @@ MODULE_ALIAS("of:N*T*Cmse,mpu9250_pslavkin");
 MODULE_ALIAS("of:N*T*Cmse,mpu9250_pslavkinC*");
 MODULE_ALIAS("i2c:mpu9250_pslavkin");
 
-MODULE_INFO(srcversion, "5E1221D65F285F669FEC6A6");
+MODULE_INFO(srcversion, "D1F2E8D61AC3029A0E482C7");

@@ -121,7 +121,7 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
    int error_count = 0;
    // copy_to_user has the format ( * to, *from, size) and returns 0 on success
    testXY();
-   size_of_message=sprintf(message,"x=%d y=%d z=%d",ax,ay,az);
+   size_of_message=sprintf(message,"x=%7d y=%7d z=%7d",ax,ay,az);
    error_count = copy_to_user(buffer, message, size_of_message);
 
    if (error_count==0){            // if true then have success
@@ -197,19 +197,19 @@ void testXY (void)
    char buf[20];
    char reg=0x3B;
    int i;
-   pr_info("mpu9250_pslavkin_probe!\n");
+//   pr_info("mpu9250_pslavkin_probe!\n");
    rv = i2c_master_send(gclient, &reg, 1);
-   pr_info("i2c_master_send: %x\n", reg);
-   for(i=0;i<14;i++)
-      buf[i]=0;
+ //  pr_info("i2c_master_send: %x\n", reg);
+//   for(i=0;i<14;i++)
+//      buf[i]=0;
    rv = i2c_master_recv(gclient, buf, 14);
-   for(i=0;i<14;i++) {
-      pr_info("i2c_master_recv: %x\n",buf[i]);
-   }
-   ax = - ( buf[0]<<8 | buf[1] );
-   ay = - ( buf[2]<<8 | buf[3] );
-   az = + ( buf[4]<<8 | buf[5] );
-   pr_info("X=%d Y=%d Z=%d\n",ax,ay,az);
+//   for(i=0;i<14;i++) {
+//      pr_info("i2c_master_recv: %x\n",buf[i]);
+//   }
+   ax = (short int)( buf[0]*256 + buf[1] );
+   ay = (short int)( buf[2]*256 + buf[3] );
+   az = (short int)( buf[4]*256 + buf[5] );
+//   pr_info("X=%d Y=%d Z=%d\n",ax,ay,az);
 }
 
 
