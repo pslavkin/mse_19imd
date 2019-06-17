@@ -28,14 +28,17 @@ __attribute__((section("__versions"))) = {
 	{ 0x70b4438, "module_layout" },
 	{ 0x15c53be0, "i2c_del_driver" },
 	{ 0x70cbdadc, "i2c_register_driver" },
-	{ 0x1e047854, "warn_slowpath_fmt" },
-	{ 0xf4fa543b, "arm_copy_to_user" },
+	{ 0x5f754e5a, "memset" },
+	{ 0x84b183ae, "strncmp" },
+	{ 0x28cc25db, "arm_copy_from_user" },
 	{ 0xc050fbe5, "device_create" },
 	{ 0xa8356886, "__class_create" },
 	{ 0xded610ba, "__register_chrdev" },
 	{ 0x8f678b07, "__stack_chk_guard" },
 	{ 0xdb7305a1, "__stack_chk_fail" },
 	{ 0xc83c0b1a, "i2c_transfer_buffer_flags" },
+	{ 0x1e047854, "warn_slowpath_fmt" },
+	{ 0xf4fa543b, "arm_copy_to_user" },
 	{ 0x91715312, "sprintf" },
 	{ 0x6bc3fbc0, "__unregister_chrdev" },
 	{ 0xdcce994, "class_destroy" },
@@ -54,4 +57,4 @@ MODULE_ALIAS("of:N*T*Cmse,mpu9250_pslavkin");
 MODULE_ALIAS("of:N*T*Cmse,mpu9250_pslavkinC*");
 MODULE_ALIAS("i2c:mpu9250_pslavkin");
 
-MODULE_INFO(srcversion, "EBC12A3AD26F4B55D407065");
+MODULE_INFO(srcversion, "1745C2EBE8249FF4612A441");

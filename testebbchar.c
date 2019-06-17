@@ -9,12 +9,12 @@
 #define DEVICE_NAME "/dev/mpu9250_pslavkin"    ///< The device will appear at /dev/ebbchar using this value
 #define BUFFER_LENGTH 256               ///< The buffer length (crude but fine)
 static char receive[BUFFER_LENGTH];     ///< The receive buffer from the LKM
+static char stringToSend[BUFFER_LENGTH];
 
 struct timespec delay={0,100000000};
 
 int main(){
    int ret, fd;
-   char stringToSend[BUFFER_LENGTH];
    printf("Starting device test code example...\r\n");
    fd = open(DEVICE_NAME, O_RDWR);             // Open the device with read/write access
    if (fd < 0){
@@ -23,14 +23,13 @@ int main(){
    }
    while(1) {
       printf("Type in a short string to send to the kernel module:\n");
-      scanf("%[^\n]%*c", stringToSend);                // Read in a string (with spaces)
+      scanf("%s", stringToSend);                // Read in a string (with spaces)
       printf("Writing message to the device [%s].\n", stringToSend);
       ret = write(fd, stringToSend, strlen(stringToSend)); // Send the string to the LKM
       if (ret < 0){
          perror("Failed to write the message to the device.");
          return errno;
       }
-
       printf("Reading from the device...\n");
       getchar();
       ret = read(fd, receive, BUFFER_LENGTH);        // Read the response from the LKM

@@ -95,7 +95,6 @@ static int dev_release(struct inode *inodep, struct file *filep)/*{{{*/
 static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *offset)/*{{{*/
 {
    int error_count = 0;
-   readXYZ();
    size_of_message=sprintf(message,"x=%7d y=%7d z=%7d",accelX,accelY,accelZ);
    error_count = copy_to_user(buffer, message, size_of_message);
    if (error_count!=0) {
@@ -104,11 +103,18 @@ static ssize_t dev_read(struct file *filep, char *buffer, size_t len, loff_t *of
    }
    return 0;
 }/*}}}*/
-static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset){/*{{{*/
-   sprintf(message, "%s(%zu letters)", buffer, len);   // appending received string with its length
-   printk("llego%s",message);
+static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) /*{{{*/
+{
+   int error_count=copy_from_user(message,buffer,len);
+   if (error_count!=0) {
+      printk(KERN_INFO "EBBChar: Failed to receive %d characters from the user\n", error_count);
+      return -EFAULT;              // Failed -- return a bad address message (i.e. -14)
+   }
    size_of_message = strlen(message);                 // store the length of the stored message
    printk(KERN_INFO "EBBChar: Received %zu characters from the user\n", len);
+   if(strncmp(message,"accel",5)==0) {
+      readXYZ();
+   }
    return len;
 }/*}}}*/
 //----------------------------------------------------
