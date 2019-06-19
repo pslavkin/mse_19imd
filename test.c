@@ -38,7 +38,7 @@ int main(){
          return errno;
       }
       printf("%s\n",receive);
-      nanosleep(&delay,NULL);
+//      nanosleep(&delay,NULL);
    }
  return 0;
 }
