@@ -89,7 +89,7 @@ static void __exit mpu9250_exit(void) /*{{{*/
 {
    device_destroy    ( mpu9250Class, MKDEV(majorNumber, 0           )); // remove the device
    class_unregister  ( mpu9250Class                                 ) ; // unregister the device class
-   class_destroy     ( mpu9250Class                                 ) ; // remove the device class
+//   class_destroy     ( mpu9250Class                                 ) ; // remove the device class
    unregister_chrdev ( majorNumber, DEVICE_NAME                     ) ; // unregister the major number
    printk            ( KERN_INFO "mpu9250: Goodbye from the LKM!\n" ) ;
 }/*}}}*/
@@ -167,7 +167,7 @@ void horizonalBar(char* buffer, short int value, char Axe)/*{{{*/
    else
       index=11;
    for(i=0;i<value;i++) {
-      buffer[index+i]='-';
+      buffer[index+i]='#';
    }
 }/*}}}*/
 static ssize_t dev_write(struct file *filep, const char *buffer, size_t len, loff_t *offset) /*{{{*/
